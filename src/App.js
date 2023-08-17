@@ -1,7 +1,10 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import "./App.css";
+import axios from "axios"; //using axios instead of fecth because axios works better with react
+import GetGeoCoordinates from "./geoCoordinates";
 
-function App() {
+
+  
   return (
     <div className="App">
       <header className="App-header">
