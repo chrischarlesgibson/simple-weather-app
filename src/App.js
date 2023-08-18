@@ -1,4 +1,5 @@
 import React, { useContext, useState, createContext } from "react";
+import { MutatingDots } from "react-loader-spinner";
 import "./App.css";
 import {
   convertUnixTime,
@@ -65,7 +66,22 @@ function AppContent() {
   };
 
   if (loading || imageLoading) {
-    return <div className={`App ${theme}`}>loading</div>;
+    return (
+      <div className={`App ${theme}`}>
+        <MutatingDots
+          height="100"
+          width="100"
+          color="#4fa94d"
+          secondaryColor="#4fa94d"
+          radius="16"
+          ariaLabel="mutating-dots-loading"
+          wrapperStyle={{}}
+          wrapperClass=""
+          visible={true}
+        />
+        ;
+      </div>
+    );
   }
 
   if (imageError) {
@@ -116,8 +132,10 @@ function AppContent() {
 
             <p>Humidity: {currentWeather.humidity} %</p>
             <p>Cloud Cover: {currentWeather.cloudCover} %</p>
-            <p>Today's Sunrise: {convertUnixTime(currentWeather.sunRise)}</p>
-            <p>Today's Sunset: {convertUnixTime(currentWeather.sunSet)}</p>
+            <p>
+              Today's Sunrise: {convertUnixTime(currentWeather.sunRise)} (CT)
+            </p>
+            <p>Today's Sunset: {convertUnixTime(currentWeather.sunSet)} (CT)</p>
           </div>
         )}
       </main>

@@ -11,6 +11,19 @@
 .temp {
     margin-right: 30px; 
 }
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.App {
+  min-height: 100vh; 
+  display: flex;
+  justify-content: center;/*centers along height axis*/
+  align-items: center; /*centers along width axis*/
+  flex-direction: column;
+}
 
 .wind {
   margin-right: 30px; 
