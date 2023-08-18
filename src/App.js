@@ -93,19 +93,18 @@ function AppContent() {
       className={`App ${theme}`}
       style={{ backgroundImage: `url(${image})`, backgroundSize: "cover" }}
     >
+      <div className=" searchbarBox">
+        <input
+          type="text"
+          placeholder="Enter a location"
+          value={inputtedlocation}
+          onChange={(e) => setInputtedLocation(e.target.value)}
+        />
+        <button onClick={handleGetWeatherClick}>Get Weather</button>
+      </div>
       <main>
-        <div>
-          <input
-            type="text"
-            placeholder="Enter a location"
-            value={inputtedlocation}
-            onChange={(e) => setInputtedLocation(e.target.value)}
-          />
-          <button onClick={handleGetWeatherClick}>Get Weather</button>
-        </div>
-
         {currentWeather && (
-          <div>
+          <div className="weatherDataBox">
             <h2>Current Weather in {inputtedlocation}</h2>
             <p> {currentWeather.weatherIcon}</p>
             <p>Conditions: {currentWeather.description}</p>

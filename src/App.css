@@ -11,8 +11,69 @@
 .temp {
     margin-right: 30px; 
 }
+.weatherDataBox{
+
+  padding: 20px;
+
+  border-radius: 8px; /* round corners */
+  box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.2); /* Shadow is centered, with a all-around blur radius of 10px, spread radius of 2px 0.2 for opaqueness */
+
+  width: 80%; 
+  margin: 20px auto; 
+  background-color: transparent;
+      /*  blur effect */
+      backdrop-filter: blur(12px);
+      /* For browsers that don't support backdrop-filter? */
+      -webkit-backdrop-filter: blur(12px);
+      border: none;
+ 
+}
+.searchbarBox{
+
+  margin-bottom: 70px; /* Adds a little spacing between the searhbox/button div and the weatherdata box */
+ width: 80%;/*parent div that contains input and button components should be 80% width of screen*/
+ display: flex; 
+  justify-content: center; /* items horizontally */
+  align-items: center; /* items vertically */
+ 
+}
+.searchbarBox input {
+  width: 70%; /* takes up 70% of the  parrent div */
+ 
+  height: 70px;
+  margin-right: 10px;/*little space between the input box and the button*/
+  border-radius: 8px; /* round corners */
+  background-color: transparent;
+  box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.2); /* Shadow is centered, with a all-around blur radius of 10px, spread radius of 2px 0.2 for opaqueness */
+  /*  blur effect */
+  backdrop-filter: blur(12px);
+
+  -webkit-backdrop-filter: blur(12px);/* For browsers that don't support backdrop-filter? */
+  border: none;
+
+}
+.searchbarBox button {
+  width: 30%; /* takes up 30% of the  parrent div */
+
+  height: 76px;
+  border-radius: 8px; /* round corners */
+  box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.2); /* Shadow is centered, with a all-around blur radius of 10px, spread radius of 2px 0.2 for opaqueness */
+  background-color: transparent;
+     /* blur effect */
+     backdrop-filter: blur(12px);
+  
+     -webkit-backdrop-filter: blur(12px);/* For browsers that don't support backdrop-filter? */
+     border: none;
+
+}
+
+.searchbarBox button {
+  cursor: pointer; /* Makes the mouse cursor turn into a hand when hovering the button */
+}
+
 html, body {
   height: 100%;
+
   margin: 0;
   padding: 0;
 }
