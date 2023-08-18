@@ -39,17 +39,38 @@ function AppContent() {
     renderWeatherData,
     fiveDayForecast,
   } = useWeatherState();
-  const [image, renderImage] = useBackgroundState();
+  const [loading, setLoading] = useState(false);
+
+  const {
+    image,
+    renderImage,
+    loading: imageLoading,
+    error: imageError,
+  } = useBackgroundState();
 
   const { theme, setTheme } = useContext(ThemeContext);
 
-  const handleGetWeatherClick = () => {
+  const handleGetWeatherClick = async () => {
     if (inputtedlocation) {
-      renderWeatherData();
-      renderImage(inputtedlocation);
-      // setTheme(theme === "light" ? "dark" : "light");
+      setLoading(true);
+      try {
+        await renderWeatherData();
+        await renderImage(inputtedlocation);
+        // setTheme(theme === "light" ? "dark" : "light");
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+      setLoading(false);
     }
   };
+
+  if (loading || imageLoading) {
+    return <div className={`App ${theme}`}>loading</div>;
+  }
+
+  if (imageError) {
+    return <div>Error loading background image: {imageError.message}</div>;
+  }
 
   return (
     <div
