@@ -5,7 +5,11 @@ import {
   degreesToCompassDirection,
   RoundTheTemp,
 } from "./utils/index";
-import { useFavorites, useWeatherState } from "./reactHooks/index";
+import {
+  useFavorites,
+  useWeatherState,
+  useBackgroundState,
+} from "./reactHooks/index";
 
 export const ThemeContext = createContext(null);
 
@@ -35,11 +39,23 @@ function AppContent() {
     renderWeatherData,
     fiveDayForecast,
   } = useWeatherState();
+  const [image, renderImage] = useBackgroundState();
 
   const { theme, setTheme } = useContext(ThemeContext);
 
+  const handleGetWeatherClick = () => {
+    if (inputtedlocation) {
+      renderWeatherData();
+      renderImage(inputtedlocation);
+      // setTheme(theme === "light" ? "dark" : "light");
+    }
+  };
+
   return (
-    <div className={`App ${theme}`}>
+    <div
+      className={`App ${theme}`}
+      style={{ backgroundImage: `url(${image})`, backgroundSize: "cover" }}
+    >
       <main>
         <div>
           <input
@@ -48,20 +64,13 @@ function AppContent() {
             value={inputtedlocation}
             onChange={(e) => setInputtedLocation(e.target.value)}
           />
-          <button
-            onClick={() => {
-              renderWeatherData();
-              setTheme(theme === "light" ? "dark" : "light");
-            }}
-          >
-            Get Weather
-          </button>
+          <button onClick={handleGetWeatherClick}>Get Weather</button>
         </div>
 
         {currentWeather && (
           <div>
             <h2>Current Weather in {inputtedlocation}</h2>
-            <icon> {currentWeather.weatherIcon}</icon>
+            <p> {currentWeather.weatherIcon}</p>
             <p>Conditions: {currentWeather.description}</p>
 
             <p>

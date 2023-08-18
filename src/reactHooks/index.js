@@ -1,4 +1,4 @@
 import useFavorites from "./useEffect";
 import useWeatherState from "./useState";
-
-export { useFavorites, useWeatherState };
+import useBackgroundState from "./backgroundImg";
+export { useFavorites, useWeatherState, useBackgroundState };

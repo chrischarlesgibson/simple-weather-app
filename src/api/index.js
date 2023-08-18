@@ -1,4 +1,10 @@
 import GetCurrentWeather from "./currentWeather";
 import GetFiveDayForecast from "./forecastedWeather";
 import GeoCoordToLocationName from "./reverseGeoCoding";
-export { GetCurrentWeather, GetFiveDayForecast, GeoCoordToLocationName };
+import GetImageOfLocation from "./backgroundPics";
+export {
+  GetCurrentWeather,
+  GetFiveDayForecast,
+  GeoCoordToLocationName,
+  GetImageOfLocation,
+};
