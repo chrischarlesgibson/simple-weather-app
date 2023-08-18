@@ -22,7 +22,7 @@ function GetFiveDayForecast(locationSearched) {
           var weatherDescription = item.weather[0].description;
           var weatherIcon = item.weather[0].icon;
           var windSpeed = item.wind.speed;
-          var windDirection = item.wind.deg;
+
           var cloudCover = item.clouds.all;
           var sunRise = response.data.city.sunrise;
           var sunSet = response.data.city.sunset;
@@ -34,7 +34,7 @@ function GetFiveDayForecast(locationSearched) {
             weatherDescription,
             weatherIcon,
             windSpeed,
-            windDirection,
+
             cloudCover,
             sunRise,
             sunSet,
