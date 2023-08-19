@@ -1,6 +1,8 @@
-import React, { useContext, useState, createContext } from "react";
+import React, { useContext, useState, createContext, useEffect } from "react";
 import { MutatingDots } from "react-loader-spinner";
 import "./App.css";
+import goldenRetrieverImage from "./images/golden_retriever.jpg";
+import siteImage from "./images/siteBackground.jpg";
 import {
   convertUnixTime,
   degreesToCompassDirection,
@@ -38,9 +40,7 @@ function AppContent() {
     setInputtedLocation,
     currentWeather,
     renderWeatherData,
-    fiveDayForecast,
   } = useWeatherState();
-  const [loading, setLoading] = useState(false);
 
   const {
     image,
@@ -49,7 +49,12 @@ function AppContent() {
     error: imageError,
   } = useBackgroundState();
 
-  const { theme, setTheme } = useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
+
+  const [loading, setLoading] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const [backgroundImage, setBackgroundImage] = useState(siteImage);
+  const [bgImageLoaded, setBgImageLoaded] = useState(false);
 
   const handleGetWeatherClick = async () => {
     if (inputtedlocation) {
@@ -57,7 +62,6 @@ function AppContent() {
       try {
         await renderWeatherData();
         await renderImage(inputtedlocation);
-        // setTheme(theme === "light" ? "dark" : "light");
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -65,21 +69,55 @@ function AppContent() {
     }
   };
 
+  const handleImageLoad = () => {
+    setImageLoaded(true);
+  };
+
+  useEffect(() => {
+    if (!loading && !imageLoading && bgImageLoaded) {
+      setBackgroundImage(image);
+    }
+  }, [loading, imageLoading, bgImageLoaded]);
+
+  useEffect(() => {
+    const img = new Image();
+    img.src = image;
+    img.onload = () => setBgImageLoaded(true);
+  }, [image]);
+
   if (loading || imageLoading) {
     return (
-      <div className={`App ${theme}`}>
-        <MutatingDots
-          height="100"
-          width="100"
-          color="#4fa94d"
-          secondaryColor="#4fa94d"
-          radius="16"
-          ariaLabel="mutating-dots-loading"
-          wrapperStyle={{}}
-          wrapperClass=""
-          visible={true}
+      <div
+        className={`App ${theme} loaded`}
+        style={{
+          backgroundImage: `url(${backgroundImage})`,
+          backgroundSize: "cover",
+        }}
+      >
+        <img
+          src={goldenRetrieverImage}
+          alt="Golden Retriever"
+          className={`loaded`}
+          onLoad={handleImageLoad}
         />
-        ;
+        <div
+          style={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+          }}
+        >
+          <MutatingDots
+            height="100"
+            width="100"
+            color="#4fa94d"
+            secondaryColor="#4fa94d"
+            radius="16"
+            ariaLabel="mutating-dots-loading"
+            visible={true}
+          />
+        </div>
       </div>
     );
   }
@@ -90,10 +128,13 @@ function AppContent() {
 
   return (
     <div
-      className={`App ${theme}`}
-      style={{ backgroundImage: `url(${image})`, backgroundSize: "cover" }}
+      className={`App ${theme} loaded`}
+      style={{
+        backgroundImage: `url(${backgroundImage})`,
+        backgroundSize: "cover",
+      }}
     >
-      <div className=" searchbarBox">
+      <div className="searchbarBox">
         <input
           type="text"
           placeholder="Enter a location"
@@ -108,27 +149,23 @@ function AppContent() {
             <h2>Current Weather in {inputtedlocation}</h2>
             <p> {currentWeather.weatherIcon}</p>
             <p>Conditions: {currentWeather.description}</p>
-
             <p>
               <span className="temp">
                 Temperature: {RoundTheTemp(currentWeather.temp)}°F
               </span>
               <span className="temp">
-                Feels Like:
-                {RoundTheTemp(currentWeather.feelsLike)}°F
+                Feels Like: {RoundTheTemp(currentWeather.feelsLike)}°F
               </span>
             </p>
-
             <p>
               <span className="wind">
-                Wind Speed: {currentWeather.windSpeed} mph{" "}
+                Wind Speed: {currentWeather.windSpeed} mph
               </span>
               <span className="wind">
-                Direction:
+                Direction:{" "}
                 {degreesToCompassDirection(currentWeather.windDirection)}
               </span>
             </p>
-
             <p>Humidity: {currentWeather.humidity} %</p>
             <p>Cloud Cover: {currentWeather.cloudCover} %</p>
             <p>
