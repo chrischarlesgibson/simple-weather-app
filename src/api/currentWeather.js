@@ -12,8 +12,10 @@ function GetCurrentWeather(locationSearched) {
       .then((response) => {
         if (response.data) {
           var description = response.data.weather[0].description;
-          var weatherIcon = response.data.weather.icon;
+          var weatherIconCode = response.data.weather[0].icon;
+          var iconURL = `http://openweathermap.org/img/w/${weatherIconCode}.png`;
           var temp = response.data.main.temp;
+
           var feelsLike = response.data.main.feels_like;
           var humidity = response.data.main.humidity;
           var windSpeed = response.data.wind.speed;
@@ -23,7 +25,7 @@ function GetCurrentWeather(locationSearched) {
           var sunSet = response.data.sys.sunset;
           return {
             description,
-            weatherIcon,
+            weatherIcon: iconURL,
             temp,
             feelsLike,
             humidity,

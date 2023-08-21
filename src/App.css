@@ -9,14 +9,16 @@
 }
 .App {
   opacity: 0;
-  transition: opacity 2s ease-in;
+  transition: opacity 2s ease-in-out;
   position: relative;
+ 
 
   
 }
 
 .App.loaded {
   opacity: 1;
+ 
 }
 
 .background-wrapper {
@@ -26,6 +28,7 @@
   width: 100%;
   height: 100%;
   z-index: 0;
+
 }
 
 .background-image {
@@ -49,13 +52,24 @@
 .App img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* This ensures the image covers the element area while maintaining its aspect ratio */
-  position: absolute; /* This will ensure the image takes up the entire container */
+  object-fit: cover; 
+  position: absolute; 
   top: 0;
   left: 0;
-  z-index: 0; /* To ensure the image stays behind your content */
+  z-index: 0; 
   opacity: 0;
   transition: opacity 2s ease-in;
+}
+.weatherIcon {
+  position: static!important; 
+  opacity: 1 !important;
+  visibility: visible !important;
+  z-index: 1 !important;
+  width: auto !important;
+  height: auto !important;
+
+  
+  
 }
 
 .App img.loaded {
@@ -68,61 +82,106 @@
 .weatherDataBox{
 
   padding: 20px;
+  text-shadow: 0px 0px 20px rgba(0, 0, 0, 1), 0px 0px 10px rgba(0, 0, 0, 1);
 
   border-radius: 8px; /* round corners */
-  box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.2); /* Shadow is centered, with a all-around blur radius of 10px, spread radius of 2px 0.2 for opaqueness */
-
-  width: 80%; 
+  box-shadow: inset 0 0 10px 2px #0c73a6, 0 0 10px 2px #0c73a6;
+color: #f3a35b;
+  display: flex;
+    flex-direction: column; 
+    align-items: center;     
+    justify-content: center;
+  width: 100%; 
   margin: 20px auto; 
   background-color: transparent;
       /*  blur effect */
-      backdrop-filter: blur(12px);
+      backdrop-filter: blur(19px);
       /* For browsers that don't support backdrop-filter? */
-      -webkit-backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(19px);
       border: none;
  
 }
-.searchbarBox{
+.boldedText {
+  font-weight: 700; 
+  color:  #0c73a6; 
+}
 
-  margin-bottom: 70px; /* Adds a little spacing between the searhbox/button div and the weatherdata box */
+.searchbarBox{
+  color: black;
+  margin-bottom: 70px;
  width: 80%;/*parent div that contains input and button components should be 80% width of screen*/
  display: flex; 
   justify-content: center; /* items horizontally */
   align-items: center; /* items vertically */
+  
  
+}
+
+
+.locationInput::placeholder {
+  color: #f3a35b; 
+  transition: 3s;
 }
 .searchbarBox input {
   width: 70%; /* takes up 70% of the  parrent div */
- 
+  font-size: 40px;
   height: 70px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;/*centers along height axis*/
+  align-items: center;
+  font-family: 'Staatliches', cursive;
+  color: black;
   margin-right: 10px;/*little space between the input box and the button*/
   border-radius: 8px; /* round corners */
   background-color: transparent;
+  border-color: #f3a35b;
+  
+  transition: 0.9s;
   box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.2); /* Shadow is centered, with a all-around blur radius of 10px, spread radius of 2px 0.2 for opaqueness */
   /*  blur effect */
-  backdrop-filter: blur(12px);
+  background-color: transparent;
+  /*  blur effect */
+  backdrop-filter: blur(19px);
+  /* For browsers that don't support backdrop-filter? */
+  -webkit-backdrop-filter: blur(19px);
+  
 
-  -webkit-backdrop-filter: blur(12px);/* For browsers that don't support backdrop-filter? */
-  border: none;
+}
+.searchbarBox input:focus {
+  outline: none; 
+  border: 2px solid #0c73a6; 
+  transition: 0.9s;
 
+}
+.searchbarBox input:focus::placeholder{
+  color: #0c73a6;
+  transition: 3s;
 }
 .searchbarBox button {
   width: 30%; /* takes up 30% of the  parrent div */
-
-  height: 76px;
+  font-size: 40px;
+  height: 74px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;/*centers along height axis*/
+  align-items: center;
+  font-family: 'Staatliches', cursive;
   border-radius: 8px; /* round corners */
   box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.2); /* Shadow is centered, with a all-around blur radius of 10px, spread radius of 2px 0.2 for opaqueness */
-  background-color: transparent;
-     /* blur effect */
-     backdrop-filter: blur(12px);
+  transition: 0.9s;
+  background-color: #f3a35b;
+
   
-     -webkit-backdrop-filter: blur(12px);/* For browsers that don't support backdrop-filter? */
-     border: none;
+  border: none;
 
+     cursor: pointer;
 }
-
-.searchbarBox button {
-  cursor: pointer; /* Makes the mouse cursor turn into a hand when hovering the button */
+.searchbarBox button:hover {
+  background-color: #0c73a6; 
+  color: black ;
+  transition: 0.9s;
+ 
 }
 
 html, body {
