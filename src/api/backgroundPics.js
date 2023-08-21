@@ -3,13 +3,23 @@ import GeoCoordToLocationName from "./reverseGeoCoding";
 
 function GetImageOfLocation(locationName) {
   return GeoCoordToLocationName(locationName).then(() => {
-    const backgroundPicURL = `https://api.unsplash.com/photos/random?query=${locationName}&client_id=${process.env.REACT_APP_API_KEY2}`;
+    const backgroundPicURL = `https://api.bing.microsoft.com/v7.0/images/search?q=${locationName}+city&count=1&safeSearch=Strict&subscription-key=${process.env.REACT_APP_API_KEY2}`;
 
-    return axios.get(backgroundPicURL).then((response) => {
-      if (response.data && response.data.urls && response.data.urls.full) {
-        return response.data.urls.full;
-      }
-    });
+    return axios
+      .get(backgroundPicURL, {
+        headers: {
+          "Ocp-Apim-Subscription-Key": process.env.REACT_APP_API_KEY2,
+        },
+      })
+      .then((response) => {
+        if (
+          response.data &&
+          response.data.value &&
+          response.data.value.length > 0
+        ) {
+          return response.data.value[0].contentUrl;
+        }
+      });
   });
 }
 
