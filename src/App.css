@@ -1,54 +1,19 @@
-.App.light {
-  background-color: white;
-  color: black;
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
-.App.dark {
-  background-color: black;
-  color: white;
-}
 .App {
-  opacity: 0;
-  transition: opacity 2s ease-in-out;
+  min-height: 100vh; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
   position: relative;
- 
-
-  
+  transition: opacity 2s ease-in-out;
 }
 
-.App.loaded {
-  opacity: 1;
- 
-}
-
-.background-wrapper {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-
-}
-
-.background-image {
-  background-size: cover;
-  transition: opacity 2s ease-in;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-}
-
-.background-image.visible {
-  opacity: 1;
-}
-
-.background-image.hidden {
-  opacity: 0;
-}
 .App img {
   width: 100%;
   height: 100%;
@@ -60,155 +25,211 @@
   opacity: 0;
   transition: opacity 2s ease-in;
 }
-.weatherIcon {
-  position: static!important; 
-  opacity: 1 !important;
-  visibility: visible !important;
-  z-index: 1 !important;
-  width: auto !important;
-  height: auto !important;
 
-  
-  
-}
-
-.App img.loaded {
+.App.loaded, .App img.loaded {
   opacity: 1;
 }
 
-.temp {
-    margin-right: 30px; 
+.background-wrapper, .background-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
 }
-.weatherDataBox{
 
-  padding: 20px;
-  text-shadow: 0px 0px 20px rgba(0, 0, 0, 1), 0px 0px 10px rgba(0, 0, 0, 1);
+.background-image {
+  background-size: cover;
+  transition: opacity 2s ease-in;
+  opacity: 0;
+}
 
-  border-radius: 8px; /* round corners */
-  box-shadow: inset 0 0 10px 2px #0c73a6, 0 0 10px 2px #0c73a6;
-color: #f3a35b;
+.background-image.visible {
+  opacity: 1;
+}
+
+.weatherIcon {
+  position: static !important; 
+  opacity: 1 !important;
+  visibility: visible !important;
+  z-index: 1 !important;
+  width: 150px !important;
+  height: auto !important;
+  margin: -30px 0;
+}
+
+.bloodOrange, .header {
+  font-size: 40px;
+}
+
+.bloodOrange {
+  color: #ff5c33;
+}
+
+.header {
   display: flex;
-    flex-direction: column; 
-    align-items: center;     
-    justify-content: center;
-  width: 100%; 
-  margin: 20px auto; 
-  background-color: transparent;
-      /*  blur effect */
-      backdrop-filter: blur(19px);
-      /* For browsers that don't support backdrop-filter? */
-      -webkit-backdrop-filter: blur(19px);
-      border: none;
- 
+  flex-direction: column; 
+  align-items: center;     
+  justify-content: center;
+  margin: 5px 0;
 }
+
+.weatherInfo, .temp, .wind {
+    margin: 5px 0;
+}
+
+.preColon, .postColon {
+  font-size: 22px; 
+  display: inline-block;
+  transition: transform 0.8s ease;
+}
+
 .boldedText {
   font-weight: 700; 
-  color:  #0c73a6; 
+  color:  #ff5c33; 
+  display: inline-block; /* Needed for applying the transform property */
+  transition: all 1.5s ease;
+  transform: translateX(0);
+}
+p:hover .preColon {
+  text-shadow: 0px 0px 6px rgba(255, 92, 51, 1); 
+  transform: scale(1.2);
 }
 
-.searchbarBox{
+p:hover .postColon {
+  transform: scale(1.45);
+  text-shadow: 0px 0px 6px rgba(243, 163, 91, 1);
+}
+
+p:hover .boldedText {
+  transform: translateX(25px);
+}
+
+.weatherDataBox {
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: inset 0 0 10px 2px #ff5c33, 0 0 10px 2px #ff5c33;
+  color: #f3a35b;
+  display: flex;
+  flex-direction: column; 
+  align-items: center;     
+  justify-content: center;
+  width: 400px; 
+  height: 600px;
+  margin: -35px;
+  background-color: transparent;
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  border: none;
+}
+
+.searchbarBox {
   color: black;
   margin-bottom: 70px;
- width: 80%;/*parent div that contains input and button components should be 80% width of screen*/
- display: flex; 
-  justify-content: center; /* items horizontally */
-  align-items: center; /* items vertically */
-  
- 
+  width: 80%;
+  display: flex; 
+  justify-content: center;
+  align-items: center;
 }
 
+.searchbarBox input, .searchbarBox button {
+  border-radius: 8px;
+  font-size: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Staatliches', cursive;
+  transition: 0.9s;
+}
 
-.locationInput::placeholder {
+.searchbarBox input {
+  width: 70%;
+  height: 70px;
+  color: black;
+  margin-right: 10px;
+  background-color: transparent;
+  border-color: #f3a35b;
+  box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+}
+
+.searchbarBox input::placeholder {
   color: #f3a35b; 
   transition: 3s;
 }
-.searchbarBox input {
-  width: 70%; /* takes up 70% of the  parrent div */
-  font-size: 40px;
-  height: 70px;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;/*centers along height axis*/
-  align-items: center;
-  font-family: 'Staatliches', cursive;
-  color: black;
-  margin-right: 10px;/*little space between the input box and the button*/
-  border-radius: 8px; /* round corners */
-  background-color: transparent;
-  border-color: #f3a35b;
-  
-  transition: 0.9s;
-  box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.2); /* Shadow is centered, with a all-around blur radius of 10px, spread radius of 2px 0.2 for opaqueness */
-  /*  blur effect */
-  background-color: transparent;
-  /*  blur effect */
-  backdrop-filter: blur(19px);
-  /* For browsers that don't support backdrop-filter? */
-  -webkit-backdrop-filter: blur(19px);
-  
+.searchbarBox input:focus::placeholder{
+  color: #ff5c33;
+  transition: 3s;
 
 }
 .searchbarBox input:focus {
   outline: none; 
-  border: 2px solid #0c73a6; 
   transition: 0.9s;
-
-}
-.searchbarBox input:focus::placeholder{
-  color: #0c73a6;
-  transition: 3s;
-}
-.searchbarBox button {
-  width: 30%; /* takes up 30% of the  parrent div */
-  font-size: 40px;
-  height: 74px;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;/*centers along height axis*/
-  align-items: center;
-  font-family: 'Staatliches', cursive;
-  border-radius: 8px; /* round corners */
-  box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.2); /* Shadow is centered, with a all-around blur radius of 10px, spread radius of 2px 0.2 for opaqueness */
-  transition: 0.9s;
-  background-color: #f3a35b;
-
-  
-  border: none;
-
-     cursor: pointer;
-}
-.searchbarBox button:hover {
-  background-color: #0c73a6; 
-  color: black ;
-  transition: 0.9s;
+  border: 2px solid #ff5c33;
  
 }
 
-html, body {
-  height: 100%;
-
-  margin: 0;
-  padding: 0;
+.searchbarBox button {
+  width: 30%;
+  height: 76px;
+  background-color: #f3a35b;
+  border: none;
+  box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.4); 
+  cursor: pointer;
 }
 
-.App {
-  min-height: 100vh; 
-  display: flex;
-  justify-content: center;/*centers along height axis*/
-  align-items: center; /*centers along width axis*/
-  flex-direction: column;
+.searchbarBox button:hover {
+  background-color: #ff5c33; 
+  color: black;
 }
 
-.wind {
-  margin-right: 30px; 
-}
-
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+/* Media Queries */
+@media only screen and (max-width: 425px) {
+  
+  .weatherDataBox {
+    width: 90%;
+    height: auto;
+    padding: 15px;
   }
-  to {
-    transform: rotate(360deg);
+
+  .background-image {
+    height: auto;
+    opacity: 0.8;
+  }
+
+  .searchbarBox {
+    width: 90%; 
+    margin-bottom: 50px;
+  }
+
+  .searchbarBox input, .searchbarBox button {
+    font-size: 1.8rem;
+    height: 60px;
+  }
+
+  .searchbarBox input {
+    width: 60%;
+  }
+
+  .searchbarBox button {
+    width: 35%;
+  }
+
+  .header, .bloodOrange {
+    font-size: 2rem;
+  }
+
+  .preColon, .postColon {
+    font-size: 1.5rem;
+  }
+
+  .weatherIcon {
+    width: 120px !important;
+    margin: -20px 0;
   }
 }
+
+
+

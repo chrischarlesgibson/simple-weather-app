@@ -56,7 +56,7 @@ function AppContent() {
   const [backgroundImage, setBackgroundImage] = useState(siteImage);
   const [bgImageLoaded, setBgImageLoaded] = useState(false);
   const [displayedLocation, setDisplayedLocation] = useState("");
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
   const [placeholderText, setPlaceholderText] = useState("Enter a location");
 
   const handleGetWeatherClick = async () => {
@@ -70,6 +70,8 @@ function AppContent() {
       }
       setLoading(false);
       setDisplayedLocation(inputtedlocation);
+      setInputtedLocation("");
+      setPlaceholderText("Enter A Location");
     }
   };
 
@@ -115,8 +117,8 @@ function AppContent() {
           <MutatingDots
             height="100"
             width="100"
-            color="#0c73a6"
-            secondaryColor="#0c73a6"
+            color="#ff5c33"
+            secondaryColor="#ff5c33"
             radius="16"
             ariaLabel="mutating-dots-loading"
             visible={true}
@@ -150,76 +152,108 @@ function AppContent() {
           value={inputtedlocation}
           onChange={(e) => setInputtedLocation(e.target.value)}
           onFocus={() => setPlaceholderText("Search Any Place On Earth....")}
-          onBlur={() => setPlaceholderText("Enter A Location")}
+          onBlur={() => {
+            if (!inputtedlocation) {
+              setPlaceholderText("Enter A Location");
+            }
+          }}
           onKeyDown={handleKeyDown}
         />
-        <button onClick={handleGetWeatherClick}>Search Weather</button>
+        <button onClick={handleGetWeatherClick}>Search</button>
       </div>
       <main>
         {currentWeather && (
           <div className={`weatherDataBox ${currentWeather ? "loaded" : ""}`}>
-            <h2>Current Weather in {displayedLocation}</h2>
+            <h2 className="header">
+              Current Weather in &nbsp;&nbsp;&nbsp;
+              <span className="bloodOrange"> {displayedLocation}</span>
+            </h2>
 
             <img
               src={currentWeather.weatherIcon}
               alt="Weather Icon"
               className="weatherIcon"
             />
-            <p>
-              Conditions:{" "}
-              <strong className="boldedText">
-                {currentWeather.description}
-              </strong>
+            <p className="weatherInfo">
+              <span className="preColon">Conditions:</span>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <span className="postColon">
+                <strong className="boldedText">
+                  {currentWeather.description}
+                </strong>
+              </span>
             </p>
-            <p>
-              <span className="temp">
-                Temperature:{" "}
+            <p className="weatherInfo">
+              <span className="preColon">Temperature:</span>{" "}
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <span className="postColon">
                 <strong className="boldedText">
                   {RoundTheTemp(currentWeather.temp)}°F
                 </strong>
               </span>
-              <span className="temp">
-                Feels Like:{" "}
+            </p>
+            <p className="weatherInfo">
+              <span className="preColon">Feels Like:</span>{" "}
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <span className="postColon">
                 <strong className="boldedText">
                   {RoundTheTemp(currentWeather.feelsLike)}°F
                 </strong>
               </span>
             </p>
-            <p>
-              <span className="wind">
-                Wind Speed:{" "}
+            <p className="weatherInfo">
+              <span className="preColon">Wind Speed:</span>{" "}
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <span className="postColon">
                 <strong className="boldedText">
                   {currentWeather.windSpeed} mph
                 </strong>
               </span>
-              <span className="wind">
-                Direction:{" "}
+            </p>
+            <p className="weatherInfo">
+              <span className="preColon">Direction:</span>{" "}
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <span className="postColon">
                 <strong className="boldedText">
                   {degreesToCompassDirection(currentWeather.windDirection)}
                 </strong>
               </span>
             </p>
-            <p>
-              Humidity:{" "}
-              <strong className="boldedText">{currentWeather.humidity}%</strong>
+            <p className="weatherInfo">
+              <span className="preColon">Humidity:</span>{" "}
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <span className="postColon">
+                <strong className="boldedText">
+                  {currentWeather.humidity}%
+                </strong>
+              </span>
             </p>
-            <p>
-              Cloud Cover:{" "}
-              <strong className="boldedText">
-                {currentWeather.cloudCover}%
-              </strong>
+            <p className="weatherInfo">
+              <span className="preColon">Cloud Cover:</span>{" "}
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <span className="postColon">
+                <strong className="boldedText">
+                  {currentWeather.cloudCover}%
+                </strong>
+              </span>
             </p>
-            <p>
-              Today's Sunrise:{" "}
-              <strong className="boldedText">
-                {convertUnixTime(currentWeather.sunRise)} (CT)
-              </strong>
+            <p className="weatherInfo">
+              <span className="preColon">Today's Sunrise:</span>{" "}
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <span className="postColon">
+                <strong className="boldedText">
+                  {convertUnixTime(currentWeather.sunRise)} (CT)
+                </strong>
+              </span>
             </p>
-            <p>
-              Today's Sunset:{" "}
-              <strong className="boldedText">
-                {convertUnixTime(currentWeather.sunSet)} (CT)
-              </strong>
+            <p className="weatherInfo">
+              <span className="preColon">Today's Sunset:</span>{" "}
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <span className="postColon">
+                <strong className="boldedText">
+                  {convertUnixTime(currentWeather.sunSet)} (CT)
+                </strong>
+              </span>
             </p>
           </div>
         )}
