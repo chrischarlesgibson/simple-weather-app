@@ -1,16 +1,16 @@
-import { useState, useEffect } from "react";
+// import { useState, useEffect } from "react";
 
-const useFavorites = () => {
-  const [favoriteLocations, setFavoriteLocations] = useState([]);
+// const useFavorites = () => {
+//   const [favoriteLocations, setFavoriteLocations] = useState([]);
 
-  useEffect(() => {
-    const savedFavorites = localStorage.getItem("favoriteCities");
-    if (savedFavorites) {
-      setFavoriteLocations(JSON.parse(savedFavorites));
-    }
-  }, []);
+//   useEffect(() => {
+//     const savedFavorites = localStorage.getItem("favoriteCities");
+//     if (savedFavorites) {
+//       setFavoriteLocations(JSON.parse(savedFavorites));
+//     }
+//   }, []);
 
-  return { favoriteLocations, setFavoriteLocations };
-};
+//   return { favoriteLocations, setFavoriteLocations };
+// };
 
-export default useFavorites;
+// export default useFavorites;

@@ -4,13 +4,13 @@
 function degreesToCompassDirection(degrees) {
   const directions = [
     "North",
-    "NorthEast",
+    "North-East",
     "East",
-    "SouthEast",
+    "South-East",
     "South",
-    "SouthWest",
+    "South-West",
     "West",
-    "NorthWest",
+    "North-West",
     "North",
   ];
   const index = Math.round((degrees % 360) / 45);

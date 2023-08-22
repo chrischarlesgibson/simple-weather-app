@@ -7,15 +7,12 @@ const useBackgroundState = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-
-
-//LoadING the image into memory before setting it as a background to ensure it displays instantly, LOADING TIME WILL BE LONGER, BUT IT WILL LOOK BETTER
+  //LoadING the image into memory before setting it as a background to ensure it displays instantly, LOADING TIME WILL BE LONGER, BUT IT WILL LOOK BETTER
   const renderImage = async (locationName) => {
     try {
       setLoading(true);
       const locationImage = await GetImageOfLocation(locationName);
 
-      
       const img = new Image();
       img.src = locationImage;
 

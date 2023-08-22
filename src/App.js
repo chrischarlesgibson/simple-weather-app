@@ -1,40 +1,32 @@
-import React, { useContext, useState, createContext, useEffect } from "react";
+// --- IMPORTING MODULES, COMPONENTS, ASSETS---/////////////////////////////////////////////////////////////////
+import React, { useState, useEffect } from "react";
 import { MutatingDots } from "react-loader-spinner";
 import "./App.css";
 import goldenRetrieverImage from "./images/golden_retriever.jpg";
 import siteImage from "./images/siteBackground.jpg";
+
+//import helper functions
 import {
   convertUnixTime,
   degreesToCompassDirection,
   RoundTheTemp,
 } from "./utils/index";
+
+//import react hooks
 import {
-  useFavorites,
+  // useFavorites,
   useWeatherState,
   useBackgroundState,
 } from "./reactHooks/index";
 
-export const ThemeContext = createContext(null);
-
-function ThemeProvider({ children }) {
-  const [theme, setTheme] = useState("light");
-
-  return (
-    <ThemeContext.Provider value={{ theme, setTheme }}>
-      {children}
-    </ThemeContext.Provider>
-  );
-}
-
+// --- MAIN COMPONENT ---/////////////////////////////////////////////////////////////////
 function App() {
-  return (
-    <ThemeProvider>
-      <AppContent />
-    </ThemeProvider>
-  );
+  return <AppContent />;
 }
 
+//// --- HELPER COMPONENTS ---/////////////////////////////////////////////////////////////////
 function AppContent() {
+  // destructuring my useState custom hook (useWeatherState) so that the they can be used in this file
   const {
     inputtedlocation,
     setInputtedLocation,
@@ -42,6 +34,7 @@ function AppContent() {
     renderWeatherData,
   } = useWeatherState();
 
+  // destructuring my useState custom hook (useBackgroundState) so that the they can be used in this file
   const {
     image,
     renderImage,
@@ -49,16 +42,14 @@ function AppContent() {
     error: imageError,
   } = useBackgroundState();
 
-  const { theme } = useContext(ThemeContext);
-
+  // Using state to manage other variables related to loading states and displayed information
   const [loading, setLoading] = useState(false);
-  const [imageLoaded, setImageLoaded] = useState(false);
   const [backgroundImage, setBackgroundImage] = useState(siteImage);
   const [bgImageLoaded, setBgImageLoaded] = useState(false);
   const [displayedLocation, setDisplayedLocation] = useState("");
-
   const [placeholderText, setPlaceholderText] = useState("Enter a location");
 
+  // Function to handle the search button click which triggers data fetching
   const handleGetWeatherClick = async () => {
     if (inputtedlocation) {
       setLoading(true);
@@ -66,7 +57,7 @@ function AppContent() {
         await renderWeatherData();
         await renderImage(inputtedlocation);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error("Error getting data:", error);
       }
       setLoading(false);
       setDisplayedLocation(inputtedlocation);
@@ -74,27 +65,26 @@ function AppContent() {
       setPlaceholderText("Enter A Location");
     }
   };
-
-  const handleImageLoad = () => {
-    setImageLoaded(true);
-  };
-
+  // useEffect hook to update the background image
   useEffect(() => {
     if (!loading && !imageLoading && bgImageLoaded) {
       setBackgroundImage(image);
     }
-  }, [loading, imageLoading, bgImageLoaded]);
+  }, [loading, imageLoading, bgImageLoaded, image]);
 
+  // useEffect hook to check when a new image is loaded
   useEffect(() => {
     const img = new Image();
     img.src = image;
     img.onload = () => setBgImageLoaded(true);
   }, [image]);
 
+  // Return statement for loading state
   if (loading || imageLoading) {
     return (
+      // Render the app with the  golden retriever image and a loading spinner
       <div
-        className={`App ${theme} loaded`}
+        className={`App loaded`}
         style={{
           backgroundImage: `url(${backgroundImage})`,
           backgroundSize: "cover",
@@ -104,7 +94,6 @@ function AppContent() {
           src={goldenRetrieverImage}
           alt="Golden Retriever"
           className={`loaded`}
-          onLoad={handleImageLoad}
         />
         <div
           style={{
@@ -131,14 +120,18 @@ function AppContent() {
   if (imageError) {
     return <div>Error loading background image: {imageError.message}</div>;
   }
+
+  // When the enter key is pressed, the handleGetWeatherClick(); is run
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       handleGetWeatherClick();
     }
   };
+
+  // Render the main content with weather data, search bar, and other information
   return (
     <div
-      className={`App ${theme} loaded`}
+      className={`App loaded`}
       style={{
         backgroundImage: `url(${backgroundImage})`,
         backgroundSize: "cover",
@@ -162,9 +155,11 @@ function AppContent() {
         <button onClick={handleGetWeatherClick}>Search</button>
       </div>
       <main>
+        {/* If the currentWeather data exists, then the div will be rendered based of the weatherDataBox loaded class. If no data exists, nothing is rendered   */}
         {currentWeather && (
           <div className={`weatherDataBox ${currentWeather ? "loaded" : ""}`}>
             <h2 className="header">
+              {/* Added 3 spaces */}
               Current Weather in &nbsp;&nbsp;&nbsp;
               <span className="bloodOrange"> {displayedLocation}</span>
             </h2>
@@ -179,6 +174,7 @@ function AppContent() {
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               <span className="postColon">
                 <strong className="boldedText">
+                  {/* Getting the currentWeather data for the description */}
                   {currentWeather.description}
                 </strong>
               </span>
@@ -188,6 +184,7 @@ function AppContent() {
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               <span className="postColon">
                 <strong className="boldedText">
+                  {/* Getting the currentWeather data for the temperature. Running the value through the RoundTheTemp function */}
                   {RoundTheTemp(currentWeather.temp)}°F
                 </strong>
               </span>
