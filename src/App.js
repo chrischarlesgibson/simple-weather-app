@@ -4,6 +4,12 @@ import { MutatingDots } from "react-loader-spinner";
 import "./App.css";
 import goldenRetrieverImage from "./images/golden_retriever.jpg";
 import siteImage from "./images/siteBackground.jpg";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import GetGeoCoordinates from "./api/geoCoordinates";
+import { useNavigate } from "react-router-dom";
+
+//importinf screens
+import InvalidLocation from "./screens/invalidLocation";
 
 //import helper functions
 import {
@@ -21,12 +27,20 @@ import {
 
 // --- MAIN COMPONENT ---/////////////////////////////////////////////////////////////////
 function App() {
-  return <AppContent />;
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<AppContent />} />
+        <Route path="/invalidlocation" element={<InvalidLocation />} />
+      </Routes>
+    </Router>
+  );
 }
 
 //// --- HELPER COMPONENTS ---/////////////////////////////////////////////////////////////////
 function AppContent() {
   // destructuring my useState custom hook (useWeatherState) so that the they can be used in this file
+  const navigate = useNavigate();
   const {
     inputtedlocation,
     setInputtedLocation,
@@ -35,12 +49,7 @@ function AppContent() {
   } = useWeatherState();
 
   // destructuring my useState custom hook (useBackgroundState) so that the they can be used in this file
-  const {
-    image,
-    renderImage,
-    loading: imageLoading,
-    error: imageError,
-  } = useBackgroundState();
+  const { image, renderImage, loading: imageLoading } = useBackgroundState();
 
   // Using state to manage other variables related to loading states and displayed information
   const [loading, setLoading] = useState(false);
@@ -54,10 +63,16 @@ function AppContent() {
     if (inputtedlocation) {
       setLoading(true);
       try {
+        const geoResult = await GetGeoCoordinates(inputtedlocation);
+        if (geoResult.error) {
+          navigate("/invalidlocation");
+          return; // This stops further execution
+        }
         await renderWeatherData();
         await renderImage(inputtedlocation);
       } catch (error) {
-        console.error("Error getting data:", error);
+        console.error("Error:", error);
+        // Navigate to invalid location or another error page if desired
       }
       setLoading(false);
       setDisplayedLocation(inputtedlocation);
@@ -115,10 +130,6 @@ function AppContent() {
         </div>
       </div>
     );
-  }
-
-  if (imageError) {
-    return <div>Error loading background image: {imageError.message}</div>;
   }
 
   // When the enter key is pressed, the handleGetWeatherClick(); is run

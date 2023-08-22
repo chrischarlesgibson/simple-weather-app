@@ -3,6 +3,11 @@ import GetGeoCoordinates from "./geoCoordinates";
 
 function GetCurrentWeather(locationSearched) {
   return GetGeoCoordinates(locationSearched).then((coords) => {
+    if (coords.error) {
+      // If there's an error, just return and don't continue.
+      return;
+    }
+
     const { lat, lon } = coords;
 
     const currentWeatherURL = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${process.env.REACT_APP_API_KEY}&units=imperial`;

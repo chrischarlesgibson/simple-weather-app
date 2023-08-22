@@ -2,7 +2,11 @@ import axios from "axios";
 import GeoCoordToLocationName from "./reverseGeoCoding";
 
 function GetImageOfLocation(locationName) {
-  return GeoCoordToLocationName(locationName).then(() => {
+  return GeoCoordToLocationName(locationName).then((locationData) => {
+    if (!locationData) {
+      // If no location data is returned, exit the function.
+      return;
+    }
     const backgroundPicURL = `https://api.bing.microsoft.com/v7.0/images/search?q=${locationName}+skyline&count=3&safeSearch=Strict&subscription-key=${process.env.REACT_APP_API_KEY2}`;
 
     return axios
